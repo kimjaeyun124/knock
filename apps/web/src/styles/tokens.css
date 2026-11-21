@@ -1,0 +1,134 @@
+/*
+ * 노크 디자인 토큰 — 이 파일이 색·글자·간격·모서리·그림자의 유일한 출처다.
+ *
+ * 2단 구조
+ *   1) 팔레트(--palette-*)  : 원색 값. 컴포넌트에서 직접 쓰지 않는다.
+ *   2) 의미 토큰(--color-*)  : "무엇에 쓰는 색인가"로 이름 붙인 값. Tailwind 유틸리티(bg-brand 등)로 노출된다.
+ *
+ * 규칙: 컴포넌트·화면은 의미 토큰만 쓴다. 색을 바꾸려면 여기 한 곳만 고친다.
+ * 그라데이션·유리 효과(blur)는 쓰지 않는다. (tokens.test.ts 가 검사)
+ * 문서: docs/DESIGN_SYSTEM.md
+ */
+
+/* static: 쓰이지 않는 토큰도 항상 출력한다. (개발용 미리보기가 모든 토큰을 읽어 보여 준다) */
+@theme static {
+  /* Tailwind 기본 팔레트(red-500 등)는 지운다. 정해진 의미 토큰만 쓰게 한다. */
+  --color-*: initial;
+
+  /* ── 1) 팔레트 ─────────────────────────────── */
+  /* 노크의 팔레트: 맑은 라벤더빛 바탕 + 인디고(문을 두드리는 손) + 노크 노랑(문고리, 장식 전용) */
+  --palette-mist-50: #ffffff;
+  --palette-mist-100: #f5f4fa;
+  --palette-mist-200: #e7e5f1;
+  --palette-mist-300: #eeedf5;
+  --palette-night-900: #1c1b2e;
+  --palette-night-600: #46435c;
+  --palette-night-500: #5a5772;
+  --palette-night-400: #7a7791;
+  --palette-white: #ffffff;
+  --palette-indigo-50: #eef0ff;
+  --palette-indigo-600: #4f46e5;
+  --palette-indigo-800: #3730a3;
+  --palette-knock-400: #ffc24a;
+  --palette-green-50: #e7f5ec;
+  --palette-green-700: #1b7f43;
+  --palette-green-800: #14582e;
+  --palette-amber-50: #fff3dc;
+  --palette-amber-700: #a8550a;
+  --palette-amber-800: #7a3b05;
+  --palette-red-50: #fdebea;
+  --palette-red-600: #c62828;
+  --palette-red-700: #9b1c1c;
+
+  /* ── 2) 의미 토큰: 바탕·글자·선 ───────────────── */
+  --color-canvas: var(--palette-mist-100); /* 화면 바탕 */
+  --color-surface: var(--palette-mist-50); /* 카드·입력 칸 */
+  --color-ink: var(--palette-night-900); /* 기본 글자 */
+  /* 보조 글자. 바탕(canvas)·카드(surface) 위에서만 쓴다. */
+  --color-ink-muted: var(--palette-night-500);
+  --color-ink-inverse: var(--palette-white); /* 진한 바탕 위의 글자 */
+  --color-line: var(--palette-mist-200); /* 카드·구분선 (장식용) */
+  /* 입력 칸·스위치 테두리 (비텍스트 대비 3:1 이상) */
+  --color-line-strong: var(--palette-night-400);
+  --color-white: var(--palette-white);
+
+  /* ── 주요 동작 ─────────────────────────────── */
+  --color-brand: var(--palette-indigo-600); /* Primary */
+  --color-brand-strong: var(--palette-indigo-800); /* Primary Hover·눌림 */
+  --color-brand-soft: var(--palette-indigo-50); /* 선택·강조 바탕 */
+  --color-focus: var(--palette-indigo-600); /* 키보드 초점 표시 */
+  /* 노크 노랑: 로고의 문고리 같은 장식 전용. 글자·상태 표시에는 쓰지 않는다. */
+  --color-accent: var(--palette-knock-400);
+
+  /*
+   * ── 상태색 ─────────────────────────────────
+   * 항상 아이콘·글자와 함께 쓴다. (색만으로 구분하지 않는다)
+   *   status-X         : 채움·아이콘·테두리, 흰 글자 바탕
+   *   status-X-soft    : 옅은 바탕
+   *   status-X-strong  : 옅은 바탕 위의 글자 (대비 4.5:1 이상)
+   */
+  --color-status-ok: var(--palette-green-700); /* Success */
+  --color-status-ok-soft: var(--palette-green-50);
+  --color-status-ok-strong: var(--palette-green-800);
+  --color-status-warn: var(--palette-amber-700); /* Warning */
+  --color-status-warn-soft: var(--palette-amber-50);
+  --color-status-warn-strong: var(--palette-amber-800);
+  --color-status-danger: var(--palette-red-600); /* Danger */
+  --color-status-danger-soft: var(--palette-red-50);
+  --color-status-danger-strong: var(--palette-red-700);
+  --color-status-muted: var(--palette-night-500); /* 확인 중·알 수 없음·정보 */
+  --color-status-muted-soft: var(--palette-mist-300);
+  --color-status-muted-strong: var(--palette-night-600);
+
+  /* 모달 뒤 화면을 덮는 층 (유리·흐림 효과 없음) */
+  --color-overlay: rgb(28 27 46 / 0.5);
+
+  /* ── 글자 ──────────────────────────────────
+   * Pretendard 를 우선 쓰고(자체 호스팅), 불러오지 못하면 시스템 한글 글꼴로 대신한다.
+   * 기준 글자 크기는 16px(브라우저 기본값)이다. 사용자가 글자 크기를 키우면 rem 이라 함께 커진다.
+   */
+  --font-sans:
+    'Pretendard Variable', Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+    system-ui, sans-serif;
+
+  /* Heading */
+  --text-display: 2.5rem; /* 40px — 가장 중요한 상태 한 줄 */
+  --text-display--line-height: 1.2;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: 1.75rem; /* 28px — 화면 제목 */
+  --text-h1--line-height: 1.3;
+  --text-h1--font-weight: 700;
+  --text-h2: 1.375rem; /* 22px — 구역 제목 */
+  --text-h2--line-height: 1.35;
+  --text-h2--font-weight: 700;
+  --text-h3: 1.125rem; /* 18px — 카드 제목 */
+  --text-h3--line-height: 1.4;
+  --text-h3--font-weight: 600;
+  /* Body */
+  --text-body-lg: 1.125rem; /* 18px */
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem; /* 16px — 기본 본문 */
+  --text-body--line-height: 1.6;
+  --text-body-sm: 0.875rem; /* 14px — 보조 설명 */
+  --text-body-sm--line-height: 1.5;
+  /* Utility */
+  --text-label: 0.875rem; /* 14px — 입력 칸 이름·배지 */
+  --text-label--line-height: 1.4;
+  --text-label--font-weight: 600;
+  --text-caption: 0.8125rem; /* 13px — 시각·출처 같은 덧붙임 */
+  --text-caption--line-height: 1.45;
+  --text-numeric: 2rem; /* 32px — 주요 숫자 (tabular-nums 가 함께 적용된다) */
+  --text-numeric--line-height: 1.1;
+  --text-numeric--font-weight: 700;
+
+  /* ── 간격 ──────────────────────────────────
+   * 4px 단위. Tailwind 의 p-1(4) p-2(8) p-3(12) p-4(16) p-5(20) p-6(24) p-8(32) p-10(40) p-12(48) p-16(64)만 쓴다.
+   */
+  --spacing: 0.25rem;
+
+  /* ── 모서리·그림자·움직임 ──────────────────── */
+  --radius-control: 1rem; /* 버튼·입력 칸 16px */
+  --radius-card: 1.5rem; /* 카드·대화상자 24px */
+  --shadow-overlay: 0 8px 24px rgb(28 27 46 / 0.16); /* 대화상자·알림창·말풍선 */
+}

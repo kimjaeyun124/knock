@@ -1,0 +1,14 @@
+node_modules
+dist
+coverage
+generated
+package-lock.json
+# 계획 문서는 표 정렬 등을 직접 관리한다
+docs/
+playwright-report
+test-results
+e2e/.auth
+# 휴대폰 앱의 네이티브 생성물(expo prebuild)
+mobile/ios
+mobile/android
+mobile/.expo

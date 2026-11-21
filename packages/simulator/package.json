@@ -1,0 +1,23 @@
+{
+  "name": "@tetris/simulator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "실제 센서 없이 수집 API를 시험하는 센서 시뮬레이터 (Phase 2: 최소 CLI, Phase 6: 시나리오)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "sim": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@tetris/shared": "*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15",
+    "vitest": "^5.1.0"
+  }
+}

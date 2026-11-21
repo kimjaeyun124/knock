@@ -1,0 +1,49 @@
+{
+  "name": "tetris",
+  "version": "0.1.0",
+  "private": true,
+  "description": "노크 — 치매 노인 야간 안전 모니터링 및 보호자 알림 서비스",
+  "type": "module",
+  "engines": {
+    "node": ">=24.15.0",
+    "npm": ">=10"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "e2e"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names server,web --prefix-colors blue,green \"npm run dev -w @tetris/server\" \"npm run dev -w @tetris/web\"",
+    "dev:server": "npm run dev -w @tetris/server",
+    "dev:web": "npm run dev -w @tetris/web",
+    "build": "npm run build --workspaces --if-present && node scripts/check-client-bundle.mjs",
+    "start": "npm run start -w @tetris/server",
+    "db:migrate": "npm run db:migrate -w @tetris/server",
+    "db:deploy": "npm run db:deploy -w @tetris/server",
+    "db:seed": "npm run db:seed -w @tetris/server",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "sim": "npm run sim -w @tetris/simulator --",
+    "vapid:generate": "npm run vapid:generate -w @tetris/server",
+    "e2e": "npm run e2e -w @tetris/e2e"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^24.0.0",
+    "concurrently": "^10.0.7",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.2"
+  }
+}

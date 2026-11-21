@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+/* Pretendard(OFL 라이선스) 자체 호스팅: 화면에 쓰는 글자만 조각(subset)으로 내려받고, 실패하면 시스템 글꼴로 대신한다. */
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+@import './tokens.css';
+@import './tokens-dark.css';
+
+@layer base {
+  html {
+    /* 브라우저 기본 16px. rem 기반이라 사용자가 글자 크기를 키우면 화면 전체가 함께 커진다. */
+    font-size: 100%;
+  }
+
+  /* 설정 → 서비스 설정 → 글자 크기. 브라우저 글자 크기 설정에 더해 앱 안에서도 키울 수 있다. */
+  html[data-text-size='large'] {
+    font-size: 115%;
+  }
+  html[data-text-size='xlarge'] {
+    font-size: 130%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    /* 한글은 단어(띄어쓰기) 단위로 줄을 바꾼다. 아주 긴 값(토큰·주소)만 필요할 때 끊는다. */
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  /* 키보드 초점은 어디서나 3px 선으로 분명하게 보인다. */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* 대화상자가 열려 있으면 뒤 화면은 스크롤하지 않는다. */
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* 숫자는 자릿수가 바뀌어도 폭이 흔들리지 않게 한다. */
+  .text-numeric {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/*
+ * 움직임을 줄이도록 설정한 사용자에게는 애니메이션·전환을 사실상 끈다.
+ * (상태는 글자로도 알리므로 움직임을 꺼도 정보는 유지된다)
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-spin,
+  .animate-pulse {
+    animation: none;
+  }
+}

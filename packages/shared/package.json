@@ -1,0 +1,20 @@
+{
+  "name": "@tetris/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "서버와 웹이 공유하는 API 계약(Zod 스키마)과 타입",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "vitest": "^5.1.0"
+  }
+}

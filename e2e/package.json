@@ -1,0 +1,12 @@
+{
+  "name": "@tetris/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "description": "노크 브라우저 E2E 테스트 (Playwright). 실제 서버·웹·시뮬레이터를 띄워 전체 경로를 확인한다.",
+  "type": "module",
+  "scripts": {
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "typecheck": "tsc --noEmit"
+  }
+}

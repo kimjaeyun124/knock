@@ -1,0 +1,42 @@
+/*
+ * 어두운 테마 — 의미 토큰(--color-*)만 다시 정의한다. 컴포넌트는 그대로이고 값만 바뀐다.
+ * `<html data-theme="dark">` 일 때 적용되며, 설정 → 서비스 설정 → 화면 테마에서 고른다.
+ *
+ * 밝은 테마와 달리 "채움(fill) 위의 글자"가 어두운 색이다. (ink-inverse 가 어두운 색)
+ * 모든 글자·조작 요소 대비는 tokens-dark.test.ts 가 밝은 테마와 같은 기준(4.5:1 / 3:1)으로 검사한다.
+ * 그라데이션·유리 효과는 쓰지 않는다.
+ */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-canvas: #0f0e1f;
+  --color-surface: #181730;
+  --color-ink: #efeefa;
+  --color-ink-muted: #b0aecb;
+  --color-ink-inverse: #0f0e1f;
+  --color-line: #2d2b4d;
+  --color-line-strong: #8c8aae;
+  --color-white: #ffffff;
+
+  --color-brand: #a5b4fc;
+  --color-brand-strong: #c7d2fe;
+  --color-brand-soft: #25244f;
+  --color-focus: #c7d2fe;
+  --color-accent: #ffc24a;
+
+  --color-status-ok: #4ade80;
+  --color-status-ok-soft: #10291b;
+  --color-status-ok-strong: #86efac;
+  --color-status-warn: #fbbf24;
+  --color-status-warn-soft: #2e2208;
+  --color-status-warn-strong: #fcd34d;
+  --color-status-danger: #f87171;
+  --color-status-danger-soft: #341519;
+  --color-status-danger-strong: #fca5a5;
+  --color-status-muted: #b0aecb;
+  --color-status-muted-soft: #232142;
+  --color-status-muted-strong: #c3c1da;
+
+  --color-overlay: rgb(0 0 0 / 0.65);
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.5);
+}
